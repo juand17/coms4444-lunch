@@ -122,7 +122,22 @@ public class Player implements lunch.sim.Player {
      * @return
      */
     private Strategy selectStrategy() {
-        return new DistractIfNeededStrategy(family, animals, state, random);
+        boolean highDens=true;
+        if((animals.size()/family.size())<10){highDens=false;}
+        boolean corner=true;
+        if(family.size()==1){
+            if (!highDens){//go to corner
+                corner=false;
+            }
+        }/*else{
+            if (highDens){//distract
+                //?????
+            }else{//go to corner 
+
+            }
+        }*/
+        return new DistractIfNeededStrategy(family, animals, state, random,corner);
+
     }
 
     private String describe(Command command) {

@@ -15,17 +15,21 @@ import lunch.sim.Point;
 public class DistractIfNeededStrategy extends Strategy {
 
     private final LureAtPositionStrategy lureStrategy;
-    private final EatAtCornerStrategy cornerStrategy;
+    private final EatAtPositionStrategy cornerStrategy;
     private Strategy subStrategy;
 
     private FamilyMember familyBeingHelped;
 
-    public DistractIfNeededStrategy(List<FamilyMember> family, List<Animal> animals, PlayerState state, Random random) {
+    public DistractIfNeededStrategy(List<FamilyMember> family, List<Animal> animals, PlayerState state, Random random,boolean corner) {
         super(family, animals, state, random);
         lureStrategy = new LureAtPositionStrategy(family, animals, state, random);
         lureStrategy.setMonkeyMargin(10);
         lureStrategy.setCanFinishEating(false);
-        cornerStrategy = new EatAtCornerStrategy(family, animals, state, random);
+        if (corner){
+            cornerStrategy = new EatAtCornerStrategy(family, animals, state, random);
+        }else{
+            cornerStrategy = new EatAtMiddleStrategy(family, animals, state, random);
+        }
         subStrategy = cornerStrategy;
     }
 
